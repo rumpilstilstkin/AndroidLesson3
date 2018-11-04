@@ -1,4 +1,4 @@
-package ru.example.geekbrains.weatherapp.ui;
+package ru.example.geekbrains.weatherapp.ui.dialogs;
 
 
 import android.app.AlertDialog;
@@ -13,7 +13,6 @@ import android.util.TypedValue;
 import android.widget.EditText;
 
 import ru.example.geekbrains.weatherapp.R;
-import ru.example.geekbrains.weatherapp.ui.dialogs.AddCityDialogListener;
 
 
 ///////////////////////////////////////////////////////////////////////////

@@ -1,7 +1,8 @@
-package ru.example.geekbrains.weatherapp;
+package ru.example.geekbrains.weatherapp.ui;
 
 
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -15,8 +16,10 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import ru.example.geekbrains.weatherapp.R;
+import ru.example.geekbrains.weatherapp.WeatherDataLoader;
 import ru.example.geekbrains.weatherapp.model.CityModel;
-import ru.example.geekbrains.weatherapp.ui.AddCityDialog;
+import ru.example.geekbrains.weatherapp.ui.dialogs.AddCityDialog;
 import ru.example.geekbrains.weatherapp.ui.dialogs.AddCityDialogListener;
 
 ///////////////////////////////////////////////////////////////////////////
@@ -83,9 +86,10 @@ public class MainActivity extends AppCompatActivity implements AddCityDialogList
 
     //Обновление/загрузка погодных данных
     private void updateWeatherData(final String city) {
+        //new MyAsT().execute(city);
         new Thread() {//Отдельный поток для получения новых данных в фоне
             public void run() {
-                final CityModel model = WeatherDataLoader.getWeatherByCity(getApplicationContext(), city);
+                final CityModel model = WeatherDataLoader.getWeatherByCityOkHttp(getApplicationContext(), city);
                 // Вызов методов напрямую может вызвать runtime error
                 // Мы не можем напрямую обновить UI, поэтому используем handler, чтобы обновить интерфейс в главном потоке.
                 if (model == null) {
@@ -180,5 +184,33 @@ public class MainActivity extends AppCompatActivity implements AddCityDialogList
     @Override
     public void onChangeCity(String city) {
         updateWeatherData(city);
+    }
+
+    class MyAsT extends AsyncTask<String, String, String>{
+        CityModel model = null;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            model = WeatherDataLoader.getWeatherByCity(getApplicationContext(), strings[0]);
+            // Вызов методов напрямую может вызвать runtime error
+            // Мы не можем напрямую обновить UI, поэтому используем handler, чтобы обновить интерфейс в главном потоке.
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (model == null) {
+                Toast.makeText(getApplicationContext(), getString(R.string.place_not_found),
+                        Toast.LENGTH_LONG).show();
+            } else {
+                renderWeather(model);
+            }
+        }
     }
 }

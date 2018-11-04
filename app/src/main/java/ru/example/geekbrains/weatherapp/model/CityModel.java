@@ -6,7 +6,6 @@ import java.util.List;
 
 
 public class CityModel {
-
     public CoordModel coord;
     public List<WeatherModel> weather = new ArrayList<WeatherModel>();
     public String base;

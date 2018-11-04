@@ -10,6 +10,13 @@
     <string name="change_city">Change city</string>
     <string name="change_city_dialog">Change city</string>
 
+    <string name="shared_pref">Shared Preference</string>
+    <string name="pref">Preference</string>
+    <string name="shared_pref_delete">Delete Shared</string>
+    <string name="pref_delete">Delete Pref</string>
+    <string name="text">Text</string>
+    <string name="shared_prefs_key_text">key_text</string>
+
     <!-- Будем парсить только 8 состояний -->
     <string name="weather_sunny">&#xf00d;</string>
     <string name="weather_clear_night">&#xf02e;</string>
